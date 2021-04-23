@@ -1,0 +1,107 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+struct thestate
+{
+	string country;
+	string state;
+	string statelanguage;
+	int population;
+	int areateretory;
+	string money;
+	string kindofstate;
+	string president;
+	void readinfo();
+};
+
+void thestate::readinfo()
+{
+	
+	cout << endl << "Country:" << country << endl;
+	cout << "State:" << state << endl;
+	cout << "State language:" << statelanguage << endl;
+	cout << "Population:" << population << endl;
+	cout << "Areateretory:" << areateretory << endl;
+	cout << "Money:" << money << endl;
+	cout << "Kind of state:" << kindofstate << endl;
+	cout << "President:" << president;
+	ofstream newfcinfo("newCountry.txt", ofstream::app);
+	newfcinfo << country << endl;
+	newfcinfo << state << endl;
+	newfcinfo << statelanguage << endl;
+	newfcinfo << population << endl;
+	newfcinfo << areateretory << endl;
+	newfcinfo << money << endl;
+	newfcinfo << kindofstate << endl;
+	newfcinfo << president << endl;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	//cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	int a = 0;
+	ofstream fcinfo("Country.txt");
+	cout << "Enter the number of countries:";
+	cin >> a;
+	getchar();
+	thestate* countryinfo = new thestate[a];
+	fcinfo << a << endl;
+	for (char i = 0; i < a; i++)
+	{
+		cout <<endl<< "Введите страну: ";
+		getline(cin, countryinfo[i].country, '\n');
+		fcinfo << countryinfo[i].country << endl;
+		cout << "Введите её столицу: ";
+		getline(cin, countryinfo[i].state, '\n');
+		fcinfo << countryinfo[i].state<< endl;
+		cout << "Язык: ";
+		getline(cin, countryinfo[i].statelanguage, '\n');
+		fcinfo << countryinfo[i].statelanguage << endl;
+		cout << "Население: ";
+		cin >> countryinfo[i].population;
+		fcinfo << countryinfo[i].population << endl;
+		cout << "Площадь: ";
+		cin >> countryinfo[i].areateretory;
+		fcinfo << countryinfo[i].areateretory << endl;
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Денежная единица: ";
+		getline(cin, countryinfo[i].money, '\n');
+		fcinfo << countryinfo[i].money << endl;
+		cout << "Государственный строй: ";
+		getline(cin, countryinfo[i].kindofstate, '\n');
+		fcinfo << countryinfo[i].kindofstate << endl;
+		cout << "Глава государства: ";
+		getline(cin, countryinfo[i].president, '\n');
+		fcinfo << countryinfo[i].president << endl;
+		
+	}
+	fcinfo.close();
+	cout <<endl<<endl<< "Данные из файла"<<endl;
+	ifstream fcinfo2("Country.txt");
+	fcinfo2 >> a;
+	string temp;
+	getline(fcinfo2, temp);
+	thestate* countryinfo2 = new thestate[a];
+	for (size_t i = 0; i < a; i++)
+	{
+		getline(fcinfo2, countryinfo2[i].country);
+	    getline(fcinfo2, countryinfo2[i].state);
+		getline(fcinfo2, countryinfo2[i].statelanguage);
+		fcinfo2 >> countryinfo2[i].population;
+		fcinfo2 >> countryinfo2[i].areateretory;
+		getline(fcinfo2, temp);  
+		getline(fcinfo2, countryinfo2[i].money);
+		getline(fcinfo2, countryinfo2[i].kindofstate);
+		getline(fcinfo2, countryinfo2[i].president);
+
+		if (countryinfo2[i].population > 20000000)
+		{
+			countryinfo2[i].readinfo();
+		}
+	}
+	fcinfo2.close();
+
+}
